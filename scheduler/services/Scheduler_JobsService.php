@@ -17,7 +17,7 @@ class Scheduler_JobsService extends BaseApplicationComponent
 	private $_fetchedAllJobs = false;
 
 	/**
-	 * Returns all of the API IDs.
+	 * Returns all of the Job IDs.
 	 *
 	 * @return array
 	 */
@@ -42,7 +42,7 @@ class Scheduler_JobsService extends BaseApplicationComponent
 	}
 
 	/**
-	 * Returns all APIs.
+	 * Returns all Jobs.
 	 *
 	 * @param string|null $indexBy
 	 * @return array
@@ -78,7 +78,7 @@ class Scheduler_JobsService extends BaseApplicationComponent
 	}
 
 	/**
-	 * Returns an API by its ID.
+	 * Returns a Job by its ID.
 	 *
 	 * @param $jobId
 	 * @return Scheduler_JobModel|null
@@ -101,6 +101,34 @@ class Scheduler_JobsService extends BaseApplicationComponent
 		}
 
 		return $this->_jobsById[$jobId];
+	}
+
+	/**
+	 * Returns an array of Jobs that are due to be executed (i.e. their date is
+	 * now or in the past)
+	 *
+	 * @return null|array
+	 */
+	public function getOverdueJobs()
+	{
+
+		$currentTimeDb = DateTimeHelper::currentTimeForDb();
+
+		$jobs = craft()->db->createCommand()
+			->select('*')
+			->from('scheduler_jobs')
+			->where('date < :now', array(':now' => $currentTimeDb))
+			->queryAll();
+
+		if ($jobs)
+		{
+			return Scheduler_JobModel::populateModels($jobs);
+		}
+		else
+		{
+			return null;
+		}
+
 	}
 
 
