@@ -29,16 +29,51 @@ class SchedulerCommand extends BaseCommand
 	 */
 	public function actionRun()
 	{
-		echo "Checking scheduled jobs ...\n\n";
+		$sep = PHP_EOL."------------------------------".PHP_EOL;
+
+
+		echo PHP_EOL."Checking scheduled jobs ...".PHP_EOL;
+		echo $sep;
 
 		$jobs = craft()->scheduler_jobs->getOverdueJobs();
 
-		foreach ($jobs as $job) {
-			echo  $job->date . "\n\n";
+		if ($jobs) {
+
+			foreach ($jobs as $job) {
+
+				// Get the job type
+				$jobType = $job->getJobType();
+
+				// Run it
+				echo "Running job #{$job->id} ...".PHP_EOL;
+				$result = $jobType->run();
+
+				// If the job ran ok, then delete it
+				if ($result)
+				{
+					craft()->scheduler_jobs->deleteJobById($job->id);
+					echo "Job #{$job->id} exited ok.";
+				}
+				// It didn’t run ok, so feed something back
+				else
+				{
+					echo "Job #{$job->id} failed to run.";
+				}
+
+				echo $sep;
+
+			}
+
+			echo PHP_EOL."Schedule complete.";
+		}
+		else
+		{
+			echo PHP_EOL."No jobs are due to run.";
 		}
 
-		echo "Done!";
+		echo PHP_EOL;
 
+		craft()->end();
 	}
 
 }

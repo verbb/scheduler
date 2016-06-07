@@ -117,7 +117,7 @@ class Scheduler_JobsService extends BaseApplicationComponent
 		$jobs = craft()->db->createCommand()
 			->select('*')
 			->from('scheduler_jobs')
-			->where('date < :now', array(':now' => $currentTimeDb))
+			->where('date <= :now', array(':now' => $currentTimeDb))
 			->queryAll();
 
 		if ($jobs)
@@ -130,7 +130,6 @@ class Scheduler_JobsService extends BaseApplicationComponent
 		}
 
 	}
-
 
 	/**
 	 * Simply takes our job model and passes it to save unless ther is a job with
@@ -157,7 +156,6 @@ class Scheduler_JobsService extends BaseApplicationComponent
 		}
 
 	}
-
 
 	/**
 	 * Saves a Job

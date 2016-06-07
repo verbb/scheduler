@@ -10,11 +10,17 @@ namespace Craft;
  * @link      http://plugins.supercooldesign.co.uk
  */
 
-class Scheduler_JobModel extends BaseModel
+class Scheduler_JobModel extends BaseComponentModel
 {
 
 	// Properties
 	// =========================================================================
+
+	/**
+	 * @var
+	 */
+	private $_jobType;
+
 
 	// Public Methods
 	// =========================================================================
@@ -22,6 +28,39 @@ class Scheduler_JobModel extends BaseModel
 	public function __toString()
 	{
 		return Craft::t($this->id);
+	}
+
+	/**
+	 * Returns the field type this field is using.
+	 *
+	 * @return BaseScheduler_Job|null
+	 */
+	public function getJobType()
+	{
+		if (!isset($this->_jobType))
+		{
+
+			$component = craft()->components->initializeComponent($this->type, 'IScheduler_Job');
+
+			if ($component)
+			{
+				$component->model = $this;
+			}
+
+			$this->_jobType = $component;
+
+			// Might not actually exist
+			if (!$this->_jobType)
+			{
+				$this->_jobType = false;
+			}
+		}
+
+		// Return 'null' instead of 'false' if it doesn't exist
+		if ($this->_jobType)
+		{
+			return $this->_jobType;
+		}
 	}
 
 	// Protected Methods

@@ -48,6 +48,8 @@ class SchedulerPlugin extends BasePlugin
 	public function init()
 	{
 
+		Craft::import('plugins.scheduler.jobs.*');
+
 		// Raised right before an element is saved.
 		craft()->on('elements.onSaveElement', function(Event $event)
 		{
