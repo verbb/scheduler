@@ -211,6 +211,8 @@ class Scheduler_JobsService extends BaseApplicationComponent
 				// Might as well update our cache of the Job while we have it.
 				$this->_jobsById[$job->id] = $job;
 
+				// TODO: bust the cache that checks whether there is any need to look up the over due jobs
+
 				if ($transaction !== null)
 				{
 					$transaction->commit();

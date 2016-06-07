@@ -31,9 +31,11 @@ class SchedulerCommand extends BaseCommand
 	{
 		$sep = PHP_EOL."------------------------------".PHP_EOL;
 
-
 		echo PHP_EOL."Checking scheduled jobs ...".PHP_EOL;
 		echo $sep;
+
+		// TODO: Check cache for flag to make db call or not
+		//       If its there, then proceed, if not then just bail.
 
 		$jobs = craft()->scheduler_jobs->getOverdueJobs();
 
