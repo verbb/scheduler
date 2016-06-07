@@ -2,14 +2,14 @@
 namespace Craft;
 
 /**
- * A console command that generates the SOAP client classes for a given
- * Tessitura SOAP API.
+ * Scheduler by Supercool
  *
- * @package   SuperCalIntegrate
+ * @package   Scheduler
  * @author    Josh Angell
- * @copyright Copyright (c) 2015, Supercool Ltd
+ * @copyright Copyright (c) 2016, Supercool Ltd
  * @link      http://plugins.supercooldesign.co.uk
  */
+
 class SchedulerCommand extends BaseCommand
 {
 
