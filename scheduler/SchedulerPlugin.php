@@ -63,12 +63,14 @@ class SchedulerPlugin extends BasePlugin
 				$date = null;
 
 				$postDate = null;
-				if (isset($element['postDate']) && $element['postDate']) {
+				if (isset($element['postDate']) && $element['postDate'])
+				{
 					$postDate = $element->postDate->getTimestamp();
 				}
 
 				$expiryDate = null;
-				if (isset($element['expiryDate']) && $element['expiryDate']) {
+				if (isset($element['expiryDate']) && $element['expiryDate'])
+				{
 					$expiryDate = $element->expiryDate->getTimestamp();
 				}
 
@@ -80,16 +82,17 @@ class SchedulerPlugin extends BasePlugin
 					$date = $expiryDate;
 				}
 
-				if (!is_null($date)) {
+				// Make the model
+				$job = new Scheduler_JobModel();
+				$job->type     = 'Scheduler_ReSaveElementJob';
+				$job->settings = array(
+					'elementId' => $element->id
+				);
 
-					$job = new Scheduler_JobModel();
-
-					$job->type     = 'Scheduler_ReSaveElementJob';
-					$job->date     = $date;
-					$job->settings = array(
-						'elementId' => $element->id
-					);
-
+				// If we have a date then make the job
+				if (!is_null($date))
+				{
+					$job->date = $date;
 					craft()->scheduler_jobs->addJob($job);
 				}
 
