@@ -207,6 +207,17 @@ class Scheduler_JobsService extends BaseApplicationComponent
 	public function saveJob(Scheduler_JobModel $job)
 	{
 
+		/**
+		 * Don’t bother saving the job if the date has actually passed
+		 *
+		 * We allow a tolerance of 60 seconds here to cope with situations where
+		 * the Job has taken a while to get here.
+		 */
+		if ($job->date->getTimestamp() < (DateTimeHelper::currentTimeStamp() - 60))
+		{
+			return false;
+		}
+
 		if ($job->id)
 		{
 			$jobRecord = Scheduler_JobRecord::model()->findById($job->id);
