@@ -118,6 +118,7 @@ class Scheduler_JobsService extends BaseApplicationComponent
 			->select('*')
 			->from('scheduler_jobs')
 			->where('date <= :now', array(':now' => $currentTimeDb))
+			->order('date')
 			->queryAll();
 
 		if ($jobs)
@@ -127,6 +128,34 @@ class Scheduler_JobsService extends BaseApplicationComponent
 		else
 		{
 			return null;
+		}
+
+	}
+
+	/**
+	 * [getNextJobDate description]
+	 * @return [type] [description]
+	 */
+	public function getNextJobDate()
+	{
+
+		$currentTimeDb = DateTimeHelper::currentTimeForDb();
+
+		$nextJob = craft()->db->createCommand()
+			->select('*')
+			->limit(1)
+			->from('scheduler_jobs')
+			->order('date')
+			->queryRow();
+
+		if ($nextJob)
+		{
+			$job = Scheduler_JobModel::populateModel($nextJob);
+			return $job->date;
+		}
+		else
+		{
+			return false;
 		}
 
 	}
@@ -195,6 +224,7 @@ class Scheduler_JobsService extends BaseApplicationComponent
 
 		if (!$job->hasErrors())
 		{
+
 			$transaction = craft()->db->getCurrentTransaction() === null ? craft()->db->beginTransaction() : null;
 			try
 			{
@@ -211,7 +241,10 @@ class Scheduler_JobsService extends BaseApplicationComponent
 				// Might as well update our cache of the Job while we have it.
 				$this->_jobsById[$job->id] = $job;
 
-				// TODO: bust the cache that checks whether there is any need to look up the over due jobs
+				// Bust the cache of the next job date
+				// NOTE: currently doesn’t work due to the cache not being shared
+				//       between the console and the web contexts
+				craft()->cache->delete('scheduler_nextjobdate');
 
 				if ($transaction !== null)
 				{
