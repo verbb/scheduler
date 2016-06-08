@@ -31,7 +31,7 @@ class Scheduler_JobModel extends BaseComponentModel
 	}
 
 	/**
-	 * Returns the field type this field is using.
+	 * Returns the Job type this Job is using.
 	 *
 	 * @return BaseScheduler_Job|null
 	 */

@@ -162,8 +162,8 @@ class Scheduler_JobsService extends BaseApplicationComponent
 
 	/**
 	 * Simply takes the job details, makes a model and passes it to save unless
-	 * there is a job with the same type and settings, in which case it just
-	 * updates that jobs’ date
+	 * there is a job with the same type, context and settings, in which case it
+	 * just updates that jobs’ date
 	 */
 	public function addJob($type, $date, $context = 'global', $settings = array())
 	{
