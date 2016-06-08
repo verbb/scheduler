@@ -17,10 +17,17 @@ interface IScheduler_Job
 	// =========================================================================
 
 	/**
-	 * Run the specified job.
+	 * Run the specified Job.
 	 *
 	 * @return bool
 	 */
 	public function run();
+
+	/**
+	 * Returns whether the Job can be used with the ScheduleJob Field Type
+	 *
+	 * @return bool
+	 */
+	public function checkJobIsAllowedInFieldType();
 
 }

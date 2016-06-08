@@ -13,6 +13,19 @@ namespace Craft;
 class Scheduler_ReSaveElementJob extends BaseScheduler_Job
 {
 
+	// Properties
+	// =========================================================================
+
+	/**
+	 * Set this to true to allow the Job to be used in the ScheduleJob Field Type
+	 *
+	 * @var bool
+	 */
+	protected $allowedInFieldType = true;
+
+	// Public Methods
+	// =========================================================================
+
 	/**
 	 * @inheritDoc IScheduler_Job::run()
 	 *
