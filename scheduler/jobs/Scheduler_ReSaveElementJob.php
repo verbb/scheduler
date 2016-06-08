@@ -2,7 +2,12 @@
 namespace Craft;
 
 /**
- * Scheduler by Supercool
+ * ReSaveElement Job
+ *
+ * This Job will re-save the given element.
+ *
+ * If that element is a Matrix or SuperTable block it will also save the owner
+ * and if its Commerce Variant it will also save the product.
  *
  * @package   Scheduler
  * @author    Josh Angell
@@ -52,6 +57,28 @@ class Scheduler_ReSaveElementJob extends BaseScheduler_Job
 			// Re-save the element
 			if (craft()->elements->saveElement($element, false))
 			{
+
+				// Check if the element has an owner (MatrixBlock, SuperTable_Block)
+				// and if so, then save that too
+				if ($element instanceof MatrixBlockModel || $element instanceof SuperTable_BlockModel)
+				{
+					$owner = $element->getOwner();
+					if ($owner)
+					{
+						craft()->elements->saveElement($owner, false);
+					}
+				}
+
+				// Do the same for Commerce Variants
+				if ($element instanceof Commerce_VariantModel)
+				{
+					$product = $element->getProduct();
+					if ($product)
+					{
+						craft()->elements->saveElement($product, false);
+					}
+				}
+
 				return true;
 			}
 			else
