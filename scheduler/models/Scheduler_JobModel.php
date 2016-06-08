@@ -77,6 +77,7 @@ class Scheduler_JobModel extends BaseComponentModel
 			'id'       => AttributeType::Number,
 			'type'     => AttributeType::String,
 			'date'     => AttributeType::DateTime,
+			'context'  => AttributeType::String,
 			'settings' => AttributeType::Mixed,
 		);
 	}

@@ -88,7 +88,7 @@ class SchedulerPlugin extends BasePlugin
 					// If we have a date then add the job
 					if (!is_null($date))
 					{
-						craft()->scheduler_jobs->addJob('Scheduler_ReSaveElementJob', $date, array('elementId' => $element->id));
+						craft()->scheduler_jobs->addJob('Scheduler_ReSaveElementJob', $date, 'programmatic', array('elementId' => $element->id));
 					}
 
 				}

@@ -165,18 +165,20 @@ class Scheduler_JobsService extends BaseApplicationComponent
 	 * there is a job with the same type and settings, in which case it just
 	 * updates that jobs’ date
 	 */
-	public function addJob($type, $date, $settings = array())
+	public function addJob($type, $date, $context = 'global', $settings = array())
 	{
 
 		// Make the model
 		$job = new Scheduler_JobModel();
 		$job->type     = $type;
 		$job->date     = $date;
+		$job->context  = $context;
 		$job->settings = $settings;
 
 		// Try and find an existing job
 		$existingJob = Scheduler_JobRecord::model()->findByAttributes(array(
 			'type'     => $job->type,
+			'context'  => $context,
 			'settings' => JsonHelper::encode($job->settings),
 		));
 
@@ -225,6 +227,7 @@ class Scheduler_JobsService extends BaseApplicationComponent
 
 		$jobRecord->type     = $job->type;
 		$jobRecord->date     = $job->date;
+		$jobRecord->context  = $job->context;
 		$jobRecord->settings = $job->settings;
 
 		$jobRecord->validate();

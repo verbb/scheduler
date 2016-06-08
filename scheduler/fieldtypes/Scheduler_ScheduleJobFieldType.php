@@ -94,7 +94,7 @@ class Scheduler_ScheduleJobFieldType extends DateFieldType
 		$jobType = $this->getSettings()->type;
 
 		if (!is_null($date)) {
-			craft()->scheduler_jobs->addJob($jobType, $date, array(
+			craft()->scheduler_jobs->addJob($jobType, $date, 'field', array(
 				'elementId' => $this->element->id
 			));
 		}
@@ -116,10 +116,6 @@ class Scheduler_ScheduleJobFieldType extends DateFieldType
 				'label' => 'Re-save element',
 				'value' => 'Scheduler_ReSaveElementJob',
 				'default' => true
-			),
-			array(
-				'label' => 'Somethign else',
-				'value' => 'Tatatat'
 			)
 		);
 

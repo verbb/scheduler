@@ -38,6 +38,7 @@ class Scheduler_JobRecord extends BaseRecord
 		return array(
 			'type'     => array(AttributeType::String, 'required' => true),
 			'date'     => array(AttributeType::DateTime, 'required' => true),
+			'context'  => array(AttributeType::String, 'default' => 'global'),
 			'settings' => AttributeType::Mixed,
 		);
 	}
