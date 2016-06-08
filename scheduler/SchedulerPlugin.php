@@ -30,6 +30,11 @@ class SchedulerPlugin extends BasePlugin
 		return '0.1.0';
 	}
 
+	public function getSchemaVersion()
+	{
+		return '0.1.0';
+	}
+
 	public function getDeveloper()
 	{
 		return 'Supercool';
@@ -38,6 +43,11 @@ class SchedulerPlugin extends BasePlugin
 	public function getDeveloperUrl()
 	{
 		return 'http://plugins.supercooldesign.co.uk';
+	}
+
+	public function getReleaseFeedUrl()
+	{
+		return 'https://raw.githubusercontent.com/supercool/Scheduler/master/changelog.json';
 	}
 
 	public function hasCpSection()
