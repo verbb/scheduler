@@ -48,48 +48,52 @@ class SchedulerPlugin extends BasePlugin
 	public function init()
 	{
 
+		// Load some classes
 		Craft::import('plugins.scheduler.jobs.*');
 
-		// Raised right before an element is saved.
-		craft()->on('elements.onSaveElement', function(Event $event)
+		// Check if we want to bind to elements.onSaveElement and run the ReSaveElement Job
+		if (craft()->config->get('enableReSaveElementOnElementSave', 'scheduler'))
 		{
-			$element = $event->params['element'];
-			if ($element) {
+			craft()->on('elements.onSaveElement', function(Event $event)
+			{
+				$element = $event->params['element'];
+				if ($element) {
 
-				// Work out the date the element should be re-saved due
-				// to its post or expiry date
+					// Work out the date the element should be re-saved due
+					// to its post or expiry date
 
-				$currentTime = DateTimeHelper::currentTimeStamp();
-				$date = null;
+					$currentTime = DateTimeHelper::currentTimeStamp();
+					$date = null;
 
-				$postDate = null;
-				if (isset($element['postDate']) && $element['postDate'])
-				{
-					$postDate = $element->postDate->getTimestamp();
+					$postDate = null;
+					if (isset($element['postDate']) && $element['postDate'])
+					{
+						$postDate = $element->postDate->getTimestamp();
+					}
+
+					$expiryDate = null;
+					if (isset($element['expiryDate']) && $element['expiryDate'])
+					{
+						$expiryDate = $element->expiryDate->getTimestamp();
+					}
+
+					if ($postDate && $postDate > $currentTime)
+					{
+						$date = $postDate;
+					} else if ($expiryDate && $expiryDate > $currentTime)
+					{
+						$date = $expiryDate;
+					}
+
+					// If we have a date then add the job
+					if (!is_null($date))
+					{
+						craft()->scheduler_jobs->addJob('Scheduler_ReSaveElementJob', $date, array('elementId' => $element->id));
+					}
+
 				}
-
-				$expiryDate = null;
-				if (isset($element['expiryDate']) && $element['expiryDate'])
-				{
-					$expiryDate = $element->expiryDate->getTimestamp();
-				}
-
-				if ($postDate && $postDate > $currentTime)
-				{
-					$date = $postDate;
-				} else if ($expiryDate && $expiryDate > $currentTime)
-				{
-					$date = $expiryDate;
-				}
-
-				// If we have a date then add the job
-				if (!is_null($date))
-				{
-					craft()->scheduler_jobs->addJob('Scheduler_ReSaveElementJob', $date, array('elementId' => $element->id));
-				}
-
-			}
-		});
+			});
+		}
 
 	}
 
