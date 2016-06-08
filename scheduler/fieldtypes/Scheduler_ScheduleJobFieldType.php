@@ -119,7 +119,44 @@ class Scheduler_ScheduleJobFieldType extends DateFieldType
 			)
 		);
 
-		// TODO: HOOK
+		/**
+		 * Process any plugins’ third-party Jobs.
+		 *
+		 * This hook should return an array of Jobs in the following format:
+		 *
+		 * ```
+		 * return array(
+		 *   array(
+		 *     'name' => 'Some Custom Jobby',
+		 *     'class' => 'MyPlugin_MyCustomJob'
+		 *   )
+		 * );
+		 * ```
+		 */
+		$allPluginJobTypes = craft()->plugins->call('scheduler_registerJobTypes');
+		foreach ($allPluginJobTypes as $pluginJobTypes)
+		{
+			foreach ($pluginJobTypes as $pluginJobType)
+			{
+				if (isset($pluginJobType['class']) && $pluginJobType['name'])
+				{
+					// Make a model so we can get the job type
+					$job = new Scheduler_JobModel();
+					$job->type = $pluginJobType['class'];
+					$jobType = $job->getJobType();
+
+					// Check this job type is allowed to be used in the field type
+					if ($jobType && $jobType->checkJobIsAllowedInFieldType())
+					{
+						$typeOptions[] = array(
+							'label' => $pluginJobType['name'],
+							'value' => $pluginJobType['class'],
+						);
+					}
+				}
+			}
+		}
+
 		// TODO: add another job for saving parent element if the current one doesn’t pick it up
 
 		return $typeOptions;
