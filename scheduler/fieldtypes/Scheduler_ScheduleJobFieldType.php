@@ -83,6 +83,24 @@ class Scheduler_ScheduleJobFieldType extends DateFieldType
 		return $settings;
 	}
 
+	/**
+	 * @inheritDoc IFieldType::onAfterElementSave()
+	 *
+	 * @return null
+	 */
+	public function onAfterElementSave()
+	{
+		$date = $this->element->getContent()->getAttribute($this->model->handle);
+		$jobType = $this->getSettings()->type;
+
+		if (!is_null($date)) {
+			craft()->scheduler_jobs->addJob($jobType, $date, array(
+				'elementId' => $this->element->id
+			));
+		}
+	}
+
+
 	// Private Methods
 	// =========================================================================
 
