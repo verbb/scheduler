@@ -161,26 +161,35 @@ class Scheduler_JobsService extends BaseApplicationComponent
 	}
 
 	/**
-	 * Simply takes our job model and passes it to save unless ther is a job with
-	 * the same type and settings, in which case it just updates that jobs date
-	 *
-	 * @param Scheduler_JobModel $job
+	 * Simply takes the job details, makes a model and passes it to save unless
+	 * there is a job with the same type and settings, in which case it just
+	 * updates that jobs’ date
 	 */
-	public function addJob(Scheduler_JobModel $job)
+	public function addJob($type, $date, $settings = array())
 	{
 
+		// Make the model
+		$job = new Scheduler_JobModel();
+		$job->type     = $type;
+		$job->date     = $date;
+		$job->settings = $settings;
+
+		// Try and find an existing job
 		$existingJob = Scheduler_JobRecord::model()->findByAttributes(array(
 			'type'     => $job->type,
 			'settings' => JsonHelper::encode($job->settings),
 		));
 
 		// If there is an existing job, update the model with its id
-		if ($existingJob) {
+		if ($existingJob)
+		{
 			$job->id = $existingJob->id;
 			$this->saveJob($job);
 
 		// Other wise just save the new one
-		} else {
+		}
+		else
+		{
 			$this->saveJob($job);
 		}
 

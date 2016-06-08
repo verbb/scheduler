@@ -82,18 +82,10 @@ class SchedulerPlugin extends BasePlugin
 					$date = $expiryDate;
 				}
 
-				// Make the model
-				$job = new Scheduler_JobModel();
-				$job->type     = 'Scheduler_ReSaveElementJob';
-				$job->settings = array(
-					'elementId' => $element->id
-				);
-
-				// If we have a date then make the job
+				// If we have a date then add the job
 				if (!is_null($date))
 				{
-					$job->date = $date;
-					craft()->scheduler_jobs->addJob($job);
+					craft()->scheduler_jobs->addJob('Scheduler_ReSaveElementJob', $date, array('elementId' => $element->id));
 				}
 
 			}
