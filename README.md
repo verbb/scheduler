@@ -1,7 +1,7 @@
 # Scheduler
 A plugin for Craft CMS that allows you to schedule Jobs to be executed on a given date.
 
-Includes a field type to allow your users to schedule Jobs from an element and includes [one built-in Job](#built-in-jobs) to re-save an element.
+Includes a field type to allow your users to schedule Jobs from an element and [one built-in Job](#built-in-jobs) to re-save an element. This Job comes pre-loaded into the [`element.onSaveElement`](https://craftcms.com/docs/plugins/events-reference#elements-onSaveElement) event.
 
 # Installation
 1. Copy the `scheduler/` folder to your `craft/plugins/` folder.
@@ -64,7 +64,7 @@ This method takes the job details, makes a model and passes it on to be saved un
 
 
 # Built-in Jobs
-There is currently one built-in Job the sole purpose of which is to re-save an element. It can be scheduled from two places: the `elements.onSaveElement` event or the supplied field type.
+There is currently one built-in Job the sole purpose of which is to re-save an element. It can be scheduled from two places: the [`elements.onSaveElement`](https://craftcms.com/docs/plugins/events-reference#elements-onSaveElement) event or the supplied field type.
 
 When the `enableReSaveElementOnElementSave` config variable is set to `true` then every time an element is saved a Job will get scheduled to re-save that element if it has a `postDate` or `expiryDate` property that is set to the future.
 
