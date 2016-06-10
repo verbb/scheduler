@@ -12,7 +12,7 @@ Includes a field type to allow your users to schedule Jobs from an element and [
 * * * * * /var/www/my-awesome-site/craft/app/etc/console/yiic Scheduler
 ```
 
-What that command does is check if there are any Jobs to run and then run them if there are.
+What that command does is check if there are any Jobs to run and then run them if there are. It also outputs what it is doing every time it runs, if you don’t want this emailed to you when using cron, then simply append `>/dev/null 2>&1` to the command.
 
 
 # History
