@@ -55,6 +55,20 @@ class SchedulerPlugin extends BasePlugin
 		return true;
 	}
 
+	/**
+	 * Require Craft 2.6
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	public function onBeforeInstall()
+	{
+		if (version_compare(craft()->getVersion().'.'.craft()->getBuild(), '2.6.2793', '<'))
+		{
+			throw new Exception('Scheduler requires Craft CMS 2.6.2793+ in order to run.');
+		}
+	}
+
 	public function init()
 	{
 
