@@ -265,8 +265,6 @@ class Scheduler_JobsService extends BaseApplicationComponent
 				$this->_jobsById[$job->id] = $job;
 
 				// Bust the cache of the next job date
-				// NOTE: currently doesn’t work due to the cache not being shared
-				//       between the console and the web contexts
 				craft()->cache->delete('scheduler_nextjobdate');
 
 				if ($transaction !== null)
