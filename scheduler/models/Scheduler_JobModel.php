@@ -40,7 +40,7 @@ class Scheduler_JobModel extends BaseComponentModel
 		if (!isset($this->_jobType))
 		{
 
-			$component = craft()->components->initializeComponent($this->type, 'IScheduler_Job');
+			$component = Craft::createComponent("Craft\\".$this->type);
 
 			if ($component)
 			{
