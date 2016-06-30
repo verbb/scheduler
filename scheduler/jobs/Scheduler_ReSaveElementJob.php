@@ -88,7 +88,7 @@ class Scheduler_ReSaveElementJob extends BaseScheduler_Job
 		}
 		catch (\Exception $e)
 		{
-			SchedulerPlugin::log(Craft::t('An exception was thrown while trying to save the '.$this->_elementType.' with the ID “'.$this->_elementIds[$step].'”: '.$e->getMessage()), LogLevel::Error);
+			SchedulerPlugin::log(Craft::t('An exception was thrown while trying to save the element with the ID “'.$elementId.'”: '.$e->getMessage()), LogLevel::Error);
 			return false;
 		}
 
