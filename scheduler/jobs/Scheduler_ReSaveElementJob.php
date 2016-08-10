@@ -54,8 +54,10 @@ class Scheduler_ReSaveElementJob extends BaseScheduler_Job
 				return false;
 			}
 
-			// Re-save the element
-			if (craft()->elements->saveElement($element, false))
+			// Re-save the element using the Element Types save method
+			// Now save it
+			$elementType = craft()->elements->getElementType($element->elementType);
+			if ($elementType->saveElement($element, false))
 			{
 
 				// Check if the element has an owner (MatrixBlock, SuperTable_Block)
