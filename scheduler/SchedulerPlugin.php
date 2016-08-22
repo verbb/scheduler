@@ -27,7 +27,7 @@ class SchedulerPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '0.1.1';
+		return '0.1.2';
 	}
 
 	public function getSchemaVersion()
