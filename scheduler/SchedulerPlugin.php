@@ -52,7 +52,7 @@ class SchedulerPlugin extends BasePlugin
 
 	public function hasCpSection()
 	{
-		return true;
+		return false;
 	}
 
 	/**
