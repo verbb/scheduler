@@ -9,7 +9,7 @@ Includes a field type to allow your users to schedule Jobs from an element and [
 3. Set the [`appId`](https://craftcms.com/docs/config-settings#appId) config parameter - this is required for the plugin to function properly.
 4. Set up a cron entry to hit the console command every minute:
 
-```
+```bash
 * * * * * /var/www/my-awesome-site/craft/app/etc/console/yiic Scheduler
 ```
 
@@ -89,11 +89,11 @@ Enables the Re-save Element Job to be scheduled every time an element is saved. 
 ### `scheduler_registerJobTypes`
 Use this hook to allow your custom Job types to be accessed from the field type. It should return an array in the following format:
 
-```
+```php
 return array(
  array(
-   'name' => 'Some Custom Jobby',
-   'class' => 'MyPlugin_MyCustomJob'
+  'name' => 'Some Custom Jobby',
+  'class' => 'MyPlugin_MyCustomJob'
  )
 );
 ```
