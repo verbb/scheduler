@@ -92,7 +92,7 @@ Use this hook to allow your custom Job types to be accessed from the field type.
 ```php
 return array(
  array(
-  'name' => 'Some Custom Jobby',
+  'name' => 'Some Custom Job',
   'class' => 'MyPlugin_MyCustomJob'
  )
 );
@@ -101,5 +101,14 @@ return array(
 
 # Changelog
 
+### 1.0.0
+[Added] Public release.
+
+### 0.1.2
+[Improved] Removed the cp tab - not in use yet
+
+### 0.1.1
+[Improved] Use the element types own save method to save it with.
+
 ### 0.1.0
-Initial pre-release.
+[Added] Initial pre-release.

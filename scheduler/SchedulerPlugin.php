@@ -6,8 +6,8 @@ namespace Craft;
  *
  * @package   Scheduler
  * @author    Josh Angell
- * @copyright Copyright (c) 2016, Supercool Ltd
- * @link      http://plugins.supercooldesign.co.uk
+ * @copyright Copyright (c) 2017, Supercool Ltd
+ * @link      https://github.com/supercool/Scheduler
  */
 
 class SchedulerPlugin extends BasePlugin
@@ -27,12 +27,12 @@ class SchedulerPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '0.1.2';
+		return '1.0.0';
 	}
 
 	public function getSchemaVersion()
 	{
-		return '0.1.0';
+		return '1.0.0';
 	}
 
 	public function getDeveloper()
@@ -42,7 +42,7 @@ class SchedulerPlugin extends BasePlugin
 
 	public function getDeveloperUrl()
 	{
-		return 'http://plugins.supercooldesign.co.uk';
+		return 'https://github.com/supercool/Scheduler';
 	}
 
 	public function getReleaseFeedUrl()
