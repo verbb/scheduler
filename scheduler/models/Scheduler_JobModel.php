@@ -6,8 +6,8 @@ namespace Craft;
  *
  * @package   Scheduler
  * @author    Josh Angell
- * @copyright Copyright (c) 2016, Supercool Ltd
- * @link      http://plugins.supercooldesign.co.uk
+ * @copyright Copyright (c) 2017, Supercool Ltd
+ * @link      https://github.com/supercool/Scheduler
  */
 
 class Scheduler_JobModel extends BaseComponentModel
