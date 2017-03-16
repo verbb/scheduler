@@ -1,0 +1,34 @@
+[
+	{
+		"version": "1.0.0",
+		"downloadUrl": "https://github.com/supercool/Scheduler/archive/1.0.0.zip",
+		"date": "2017-03-16T16:00:00-00:00",
+		"notes": [
+			"[Added] Public release."
+		]
+	},
+	{
+		"version": "0.2.0",
+		"downloadUrl": "https://github.com/supercool/Scheduler/archive/0.2.0.zip",
+		"date": "2016-08-22T16:00:00-00:00",
+		"notes": [
+			"[Improved] Removed the cp tab - not in use yet."
+		]
+	},
+	{
+		"version": "0.1.1",
+		"downloadUrl": "https://github.com/supercool/Scheduler/archive/0.1.1.zip",
+		"date": "2016-08-10T16:00:00-00:00",
+		"notes": [
+			"[Improved] Use the element types own save method to save it with."
+		]
+	},
+	{
+		"version": "0.1.0",
+		"downloadUrl": "https://github.com/supercool/Scheduler/archive/0.1.0.zip",
+		"date": "2016-08-10T16:00:00-00:00",
+		"notes": [
+			"[Added] Initial pre-release."
+		]
+	}
+]
