@@ -1,5 +1,13 @@
 [
 	{
+		"version": "1.0.1",
+		"downloadUrl": "https://github.com/supercool/Scheduler/archive/1.0.0.zip",
+		"date": "2017-05-17T12:00:00-00:00",
+		"notes": [
+			"[Improved] Removed craft()->getBuild() as it has been deprecated."
+		]
+	},
+	{
 		"version": "1.0.0",
 		"downloadUrl": "https://github.com/supercool/Scheduler/archive/1.0.0.zip",
 		"date": "2017-03-16T16:00:00-00:00",

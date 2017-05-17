@@ -101,6 +101,9 @@ return array(
 
 # Changelog
 
+### 1.0.1
+[Improved] Removed craft()->getBuild() as it has been deprecated.
+
 ### 1.0.0
 [Added] Public release.
 

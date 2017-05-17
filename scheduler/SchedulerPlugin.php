@@ -27,7 +27,7 @@ class SchedulerPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.0.0';
+		return '1.0.1';
 	}
 
 	public function getSchemaVersion()
@@ -63,7 +63,7 @@ class SchedulerPlugin extends BasePlugin
 	 */
 	public function onBeforeInstall()
 	{
-		if (version_compare(craft()->getVersion().'.'.craft()->getBuild(), '2.6.2793', '<'))
+		if (version_compare(craft()->getVersion(), '2.6.2793', '<'))
 		{
 			throw new Exception('Scheduler requires Craft CMS 2.6.2793+ in order to run.');
 		}
