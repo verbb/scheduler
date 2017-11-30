@@ -27,7 +27,7 @@ class SchedulerPlugin extends BasePlugin
 
 	public function getVersion()
 	{
-		return '1.0.2';
+		return '1.0.3';
 	}
 
 	public function getSchemaVersion()
@@ -112,7 +112,8 @@ class SchedulerPlugin extends BasePlugin
 					// If we have a date then add the job
 					if (!is_null($date))
 					{
-						craft()->scheduler_jobs->addJob('Scheduler_ReSaveElementJob', $date, 'programmatic', array('elementId' => $element->id));
+						$context = 'programmatic:'.$date;
+						craft()->scheduler_jobs->addJob('Scheduler_ReSaveElementJob', $date, $context, array('elementId' => $element->id));
 					}
 
 				}
