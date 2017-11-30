@@ -1,7 +1,23 @@
 [
 	{
+		"version": "1.0.3",
+		"downloadUrl": "https://github.com/supercool/Scheduler/archive/1.0.3.zip",
+		"date": "2017-11-30T12:00:00-00:00",
+		"notes": [
+			"[Improved] Add timestamp to default resave job's context"
+		]
+	},
+	{
+		"version": "1.0.2",
+		"downloadUrl": "https://github.com/supercool/Scheduler/archive/1.0.2.zip",
+		"date": "2017-11-16T12:00:00-00:00",
+		"notes": [
+			"[Fix] Supercool fix: check if element is status schedule model if yes then re-save it using craft's native saveElement method."
+		]
+	},
+	{
 		"version": "1.0.1",
-		"downloadUrl": "https://github.com/supercool/Scheduler/archive/1.0.0.zip",
+		"downloadUrl": "https://github.com/supercool/Scheduler/archive/1.0.1.zip",
 		"date": "2017-05-17T12:00:00-00:00",
 		"notes": [
 			"[Improved] Removed craft()->getBuild() as it has been deprecated."
