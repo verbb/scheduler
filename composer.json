@@ -1,0 +1,41 @@
+{
+    "name": "supercool/scheduler",
+    "description": "A plugin for Craft CMS that allows you to schedule jobs to be executed on a given date.",
+    "type": "craft-plugin",
+    "version": "2.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "scheduler"
+    ],
+    "support": {
+        "docs": "https://github.com/supercool/scheduler/blob/master/README.md",
+        "issues": "https://github.com/supercool/scheduler/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Supercool",
+            "homepage": "http://supercooldesign.co.uk"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "supercool\\scheduler\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Scheduler",
+        "handle": "scheduler",
+        "schemaVersion": "1.0.0",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/supercool/scheduler/master/CHANGELOG.md",
+        "class": "supercool\\scheduler\\Scheduler"
+    }
+}
