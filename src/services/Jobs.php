@@ -13,7 +13,9 @@ namespace supercool\scheduler\services;
 
 use Craft;
 use craft\db\Query;
+use craft\helpers\Db;
 use craft\helpers\App;
+use craft\helpers\Json;
 use craft\helpers\DateTimeHelper;
 use yii\base\Component;
 use yii\base\Exception;
@@ -86,7 +88,6 @@ class Jobs extends Component
     }
     else if (!$indexBy)
     {
-      Craft::dd($this->_jobsById);
       return array_values($this->_jobsById);
     }
     else
@@ -135,15 +136,14 @@ class Jobs extends Component
    */
   public function getOverdueJobs()
   {
-    $currentTimeDb = DateTimeHelper::currentTimeStamp();
+    $currentTime = DateTimeHelper::currentTimeStamp();
+    $currentTimeDb = Db::prepareDateForDb($currentTime);
 
-    $jobs = (new Query())
-      ->from(['{{%scheduler_jobs}}'])
-      ->where('date <= :now', [':now' => $currentTimeDb])
+    $jobRecords = JobRecord::find()->where('date <= :now', [':now' => $currentTimeDb])
       ->orderBy('date')
       ->all();
 
-    if ($jobs)
+    if ( $jobRecords )
     {
       $jobModels = [];
 
@@ -167,8 +167,6 @@ class Jobs extends Component
    */
   public function getNextJobDate()
   {
-    $currentTimeDb = DateTimeHelper::currentTimeStamp();
-
     $nextJob = JobRecord::find()->orderBy('date')->one();
 
     if ($nextJob)
@@ -179,6 +177,173 @@ class Jobs extends Component
     else
     {
       return false;
+    }
+  }
+
+
+  /**
+   * Simply takes the job details, makes a model and passes it to save unless
+   * there is a job with the same type, context and settings, in which case it
+   * just updates that jobs’ date
+   */
+  public function addJob($type, $date, $context = 'global', $settings = array())
+  {
+    // Make the model
+    $job = new Job();
+    $job->type     = $type;
+    $job->date     = $date;
+    $job->context  = $context;
+    $job->settings = $settings;
+
+    // Try and find an existing job
+    $existingJob = JobRecord::find()->where([
+      'type'     => $job->type,
+      'context'  => $context,
+      'settings' => Json::encode($job->settings),
+    ])->one();
+
+    // If there is an existing job, update the model with its id
+    if ($existingJob)
+    {
+      $job->id = $existingJob->id;
+      $this->saveJob($job);
+    // Other wise just save the new one
+    }
+    else
+    {
+      $this->saveJob($job);
+    }
+  }
+
+
+  /**
+   * Saves a Job
+   *
+   * @param Job $job
+   * @throws \Exception
+   * @return bool
+   */
+  public function saveJob(Job $job)
+  {
+    /**
+     * Don’t bother saving the job if the date has actually passed
+     *
+     * We allow a tolerance of 60 seconds here to cope with situations where
+     * the Job has taken a while to get here.
+     */
+    if ($job->date->getTimestamp() < (DateTimeHelper::currentTimeStamp() - 60))
+    {
+      return false;
+    }
+
+    if ($job->id)
+    {
+      $jobRecord = JobRecord::find()->where(['id' => $job->id])->one();
+
+      if (!$jobRecord)
+      {
+        throw new Exception(Craft::t('scheduler', 'No Job exists with the ID “{id}”', ['id' => $job->id]));
+      }
+
+      $oldJob = $this->_createJobFromRecord($jobRecord);
+      $isNewJob = false;
+    }
+    else
+    {
+      $jobRecord = new JobRecord();
+      $isNewJob = true;
+    }
+
+    $jobRecord->type     = $job->type;
+    $jobRecord->date     = $job->date;
+    $jobRecord->context  = $job->context;
+    $jobRecord->settings = $job->settings;
+
+    $jobRecord->validate();
+    $job->addErrors($jobRecord->getErrors());
+
+    if ( !$job->hasErrors() )
+    {
+      $db = Craft::$app->getDb();
+      $transaction = $db->beginTransaction();
+
+      try
+      {
+        // Save it!
+        $jobRecord->save(false);
+
+        // Now that we have an Job ID, save it on the model
+        if (!$job->id)
+        {
+          $job->id = $jobRecord->id;
+        }
+
+        // Might as well update our cache of the Job while we have it.
+        $this->_jobsById[$job->id] = $job;
+
+        // Bust the cache of the next job date
+        Craft::$app->getCache()->delete('scheduler_nextjobdate');
+
+        if ($transaction !== null)
+        {
+          $transaction->commit();
+        }
+      }
+      catch (\Exception $e)
+      {
+        if ($transaction !== null)
+        {
+          $transaction->rollback();
+        }
+        throw $e;
+      }
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+
+
+  /**
+   * Deletes a Job
+   *
+   * @param int $jobId
+   * @throws \Exception
+   * @return bool
+   */
+  public function deleteJobById($jobId)
+  {
+    if (!$jobId)
+    {
+      return false;
+    }
+
+    $db = Craft::$app->getDb();
+    $transaction = $db->beginTransaction();
+
+    try
+    {
+      $affectedRows = Craft::$app->getDb()->createCommand()->delete(
+        '{{%scheduler_jobs}}',
+        ['id' => $jobId]
+      )->execute();
+
+      if ($transaction !== null)
+      {
+        $transaction->commit();
+      }
+
+      return (bool) $affectedRows;
+    }
+    catch (\Exception $e)
+    {
+      if ($transaction !== null)
+      {
+        $transaction->rollback();
+      }
+      throw $e;
     }
   }
 
@@ -206,6 +371,11 @@ class Jobs extends Component
       'context',
       'settings'
     ]));
+
+    if ( $job->settings )
+    {
+      $job->settings = Json::decode($job->settings);
+    }
 
     return $job;
   }
