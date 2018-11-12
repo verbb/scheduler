@@ -19,7 +19,9 @@ cd /path/to/project
 composer require supercool/scheduler
 ```
 
-3. Set up a cron entry to hit the console command every minute:
+3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Scheduler.
+
+4. Set up a cron entry to hit the console command every minute:
 
 ```bash
 * * * * * /var/www/my-awesome-site/craft scheduler/command/run
