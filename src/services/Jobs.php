@@ -22,6 +22,7 @@ use yii\base\Exception;
 
 use supercool\scheduler\models\Job;
 use supercool\scheduler\records\Job as JobRecord;
+use supercool\scheduler\events\RegisterSchedulerJobTypesEvent;
 
 class Jobs extends Component
 {
@@ -29,6 +30,28 @@ class Jobs extends Component
   private $_allJobIds;
   private $_jobsById;
   private $_fetchedAllJobs = false;
+
+
+  /**
+   * Get available job types for our custom field
+   */
+  public function getAvailableJobTypes()
+  {
+      $jobTypes = [];
+
+      $jobTypes[] = [
+        'label' => 'Re-save element',
+        'value' => 'supercool\scheduler\jobs\SchedulerReSaveElementJob',
+        'default' => true
+      ];
+
+      // Third Party
+      $event = new RegisterSchedulerJobTypesEvent([
+          'types' => $jobTypes
+      ]);
+
+      return $event->types;
+  }
 
 
   /**
