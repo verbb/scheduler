@@ -27,6 +27,13 @@ use supercool\scheduler\events\RegisterSchedulerJobTypesEvent;
 class Jobs extends Component
 {
 
+  // Constants
+  // =========================================================================
+  /**
+   * @event RegisterComponentTypesEvent The event that is triggered when registering field types.
+   */
+  const EVENT_REGISTER_SCHEDULER_JOB_TYPES = 'registerSchedulerJobTypes';
+
   private $_allJobIds;
   private $_jobsById;
   private $_fetchedAllJobs = false;
@@ -49,6 +56,8 @@ class Jobs extends Component
       $event = new RegisterSchedulerJobTypesEvent([
           'types' => $jobTypes
       ]);
+
+      $this->trigger(self::EVENT_REGISTER_SCHEDULER_JOB_TYPES, $event);
 
       return $event->types;
   }

@@ -24,12 +24,6 @@ use craft\helpers\Template;
 
 class ScheduleJob extends Date
 {
-    // Constants
-    // =========================================================================
-    /**
-     * @event RegisterComponentTypesEvent The event that is triggered when registering field types.
-     */
-    const EVENT_REGISTER_SCHEDULER_JOB_TYPES = 'registerSchedulerJobTypes';
 
     // Static Methods
     // =========================================================================

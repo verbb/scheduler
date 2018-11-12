@@ -21,16 +21,6 @@ use supercool\scheduler\jobs\BaseSchedulerJob;
 class SchedulerReSaveElementJob extends BaseSchedulerJob
 {
 
-	// Properties
-	// =========================================================================
-
-	/**
-	 * Set this to true to allow the Job to be used in the ScheduleJob Field Type
-	 *
-	 * @var bool
-	 */
-	protected $allowedInFieldType = true;
-
 	// Public Methods
 	// =========================================================================
 

@@ -23,12 +23,4 @@ interface ISchedulerJob
 	 * @return bool
 	 */
 	public function run();
-
-	/**
-	 * Returns whether the Job can be used with the ScheduleJob Field Type
-	 *
-	 * @return bool
-	 */
-	public function checkJobIsAllowedInFieldType();
-
 }

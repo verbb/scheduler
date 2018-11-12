@@ -41,18 +41,16 @@ Finally, there are a lot of other plugins and services that rely on the element 
 # Anatomy of a Job
 A Job is a bit like a simple version of a Task with a date. It is essentially a class that must extend the `BaseSchedulerJob` and then would typically do something in its `run()` method. Take a look at the built in [Re-save Element](scheduler/jobs/SchedulerReSaveElementJob.php) Job if you want to create your own.
 
-Make sure to set the protected property `$allowedInFieldType` to `true` if you want it to be used in the field type.
-
-# Scheduler_JobModel
+# Scheduler Job model
 
 ## Properties
-Scheduler_JobModel objects have the following properties:
+Scheduler Job model objects have the following properties:
 
 ### `id`
 The Job’s ID.
 
 ### `type`
-The name of Job’s class, e.g. `Scheduler_ReSaveElementJob`.
+The name of Job’s class, e.g. `SchedulerReSaveElementJob`.
 
 ### `date`
 A [DateTime](https://craftcms.com/docs/templating/datetime) object of the date the Job should be run on.
@@ -78,7 +76,7 @@ This method takes the job details, makes a model and passes it on to be saved un
 
 
 # Built-in Jobs
-There is currently one built-in Job the sole purpose of which is to re-save an element. It can be scheduled from two places: the [`elements.onSaveElement`](https://craftcms.com/docs/plugins/events-reference#elements-onSaveElement) event or the supplied field type.
+There is currently one built-in Job the sole purpose of which is to re-save an element. It can be scheduled from two places: the [`Elements::EVENT_AFTER_SAVE_ELEMENT`](https://docs.craftcms.com/api/v3/craft-base-savablecomponentinterface.html#public-methods) event or the supplied field type.
 
 When the `enableReSaveElementOnElementSave` config variable is set to `true` then every time an element is saved a Job will get scheduled to re-save that element if it has a `postDate` or `expiryDate` property that is set to the future.
 
@@ -88,7 +86,7 @@ Currently when determining which element to save Scheduler will also check if th
 
 
 # Field type
-The field type allows users to select a date on which a Job should run, you set the Job type in the settings of the field. It can be used anywhere a normal field can and simply saves a [DateTime](https://craftcms.com/docs/templating/datetime) object as its value - so you can even use it when fetching elements using the [ElementCriteriaModel](https://craftcms.com/docs/templating/elementcriteriamodel).
+The field type allows users to select a date on which a Job should run, you set the Job type in the settings of the field. It can be used anywhere a normal field can and simply saves a [DateTime](https://craftcms.com/docs/templating/datetime) object as its value - so you can even use it when fetching elements.
 
 
 # Config variables
@@ -97,16 +95,21 @@ The field type allows users to select a date on which a Job should run, you set 
 Enables the Re-save Element Job to be scheduled every time an element is saved. Defaults to `true`.
 
 
-# Hooks
+# Adding custom jobs to field's types dropdown
 
-### `scheduler_registerJobTypes`
-Use this hook to allow your custom Job types to be accessed from the field type. It should return an array in the following format:
+Use the following event you can add your custom Job types to be accessed from the field type. It should return an array in the following format:
 
 ```php
-return array(
- array(
-  'name' => 'Some Custom Job',
-  'class' => 'MyPlugin_MyCustomJob'
- )
-);
+use Craft;
+use yii\base\Event;
+
+use supercool\scheduler\services\Jobs as SchedulerJobs;
+use supercool\scheduler\events\RegisterSchedulerJobTypesEvent;
+
+Event::on(SchedulerJobs::class, SchedulerJobs::EVENT_REGISTER_SCHEDULER_JOB_TYPES, function (RegisterSchedulerJobTypesEvent $event) {
+    $event->types[] = [
+        'label' => 'Custom job title',
+        'value' => CustomSchedulerJob::class,
+    ];
+});
 ```

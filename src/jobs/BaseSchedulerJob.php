@@ -23,13 +23,6 @@ class BaseSchedulerJob extends SavableComponent implements ISchedulerJob
 	// =========================================================================
 
 	/**
-	 * Set this to true to allow the Job to be used with the ScheduleJob Field Type
-	 *
-	 * @var bool
-	 */
-	protected $allowedInFieldType = false;
-
-	/**
 	 * The model instance associated with the current component instance.
 	 *
 	 * @var BaseModel
@@ -48,16 +41,6 @@ class BaseSchedulerJob extends SavableComponent implements ISchedulerJob
 	public function run()
 	{
 		return true;
-	}
-
-	/**
-	 * @inheritDoc IScheduler_Job::checkJobIsAllowedInFieldType()
-	 *
-	 * @return bool
-	 */
-	public function checkJobIsAllowedInFieldType()
-	{
-		return $this->allowedInFieldType;
 	}
 
 }
