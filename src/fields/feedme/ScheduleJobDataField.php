@@ -3,6 +3,8 @@
 namespace supercool\scheduler\fields\feedme;
 
 use Cake\Utility\Hash;
+use Craft;
+use craft\feedme\base\Field;
 use craft\feedme\base\FieldInterface;
 use craft\feedme\helpers\DateHelper;
 
@@ -12,10 +14,20 @@ use craft\feedme\helpers\DateHelper;
  * Class ScheduleJobDataField
  * @package supercool\scheduler\fields\feedme
  */
-class ScheduleJobDataField implements FieldInterface {
+class ScheduleJobDataField extends Field implements FieldInterface {
 
     // Define the actual field class so feed me knows what to use this Data field for
     public static $class = 'supercool\scheduler\fields\ScheduleJob';
+
+
+    /**
+     * Returns the display name of this class.
+     *
+     * @return string The display name of this class.
+     */
+    public static function displayName(): string {
+        return Craft::t('scheduler', 'Schedule Job');
+    }
 
     /**
      * Defines the template feed me uses on the mapping template.
@@ -27,7 +39,6 @@ class ScheduleJobDataField implements FieldInterface {
     {
         return 'feed-me/_includes/fields/date';
     }
-
 
     /**
      * What feed me does with the data to get a DB ready value.
@@ -49,7 +60,6 @@ class ScheduleJobDataField implements FieldInterface {
 
         return $value;
     }
-
 
 
 

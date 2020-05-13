@@ -65,7 +65,7 @@ class Scheduler extends Plugin
             Event::on(feedMeFields::class,
                 feedMeFields::EVENT_REGISTER_FEED_ME_FIELDS,
                 function(RegisterFeedMeFieldsEvent $e) {
-                    $event->fields[] = ScheduleJobDataField::class;
+                    $e->fields[] = ScheduleJobDataField::class;
                 });
         }
 

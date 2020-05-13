@@ -2,7 +2,7 @@
     "name": "supercool/scheduler",
     "description": "A plugin for Craft CMS that allows you to schedule jobs to be executed on a given date.",
     "type": "craft-plugin",
-    "version": "2.0.2",
+    "version": "2.0.2.1",
     "keywords": [
         "craft",
         "cms",
