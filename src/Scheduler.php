@@ -19,7 +19,10 @@ use craft\services\Elements;
 use craft\helpers\DateTimeHelper;
 use craft\events\PluginEvent;
 use craft\events\RegisterComponentTypesEvent;
+use craft\feedme\events\RegisterFeedMeFieldsEvent;
+use craft\feedme\services\Fields as feedMeFields;
 
+use supercool\scheduler\fields\feedme\ScheduleJobDataField;
 use yii\base\Event;
 
 use supercool\scheduler\models\Settings;
@@ -58,16 +61,13 @@ class Scheduler extends Plugin
             }
         );
 
-        // Do something after we're installed
-        Event::on(
-          Plugins::className(),
-          Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-          function (PluginEvent $event) {
-            if ($event->plugin === $this) {
-              // We were just installed
-            }
-          }
-        );
+        if(Craft::$app->plugins->isPluginInstalled('feed-me')) {
+            Event::on(feedMeFields::class,
+                feedMeFields::EVENT_REGISTER_FEED_ME_FIELDS,
+                function(RegisterFeedMeFieldsEvent $e) {
+                    $event->fields[] = ScheduleJobDataField::class;
+                });
+        }
 
         if ( $this->getSettings()->enableReSaveElementOnElementSave )
         {
