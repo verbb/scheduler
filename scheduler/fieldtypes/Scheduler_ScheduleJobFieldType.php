@@ -95,7 +95,8 @@ class Scheduler_ScheduleJobFieldType extends DateFieldType
 
 		if (!is_null($date)) {
 			craft()->scheduler_jobs->addJob($jobType, $date, 'field', array(
-				'elementId' => $this->element->id
+			    'elementId' => $this->element->id,
+                'fieldHandle' => $this->model->handle
 			));
 		}
 	}
