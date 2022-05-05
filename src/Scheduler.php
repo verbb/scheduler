@@ -75,7 +75,7 @@ class Scheduler extends Plugin
 
             $element = $event->element;
 
-            if ( !$element )
+            if (!$element || $element->getIsDraft() || $element->getIsRevision())
             {
               return true;
             }

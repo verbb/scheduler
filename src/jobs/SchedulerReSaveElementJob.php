@@ -40,7 +40,7 @@ class SchedulerReSaveElementJob extends BaseSchedulerJob
 		try
 		{
 			// Get the element model
-			$element = Craft::$app->elements->getElementById($elementId);
+			$element = Craft::$app->elements->getElementById((int) $elementId);
 
 			// Check there was one - if not then do nothing and return true so it is removed from the queue
 			if (!$element) {
