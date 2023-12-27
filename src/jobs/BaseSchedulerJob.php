@@ -1,46 +1,22 @@
 <?php
+namespace verbb\scheduler\jobs;
 
-namespace supercool\scheduler\jobs;
-
-/**
- * Scheduler plugin for Craft CMS 3.x
- *
- * Scheduler
- *
- * @link      http://supercooldesign.co.uk
- * @copyright Copyright (c) 2018 Supercool
- */
-
-use Craft;
 use craft\base\SavableComponent;
-
-use supercool\scheduler\jobs\ISchedulerJob;
 
 class BaseSchedulerJob extends SavableComponent implements ISchedulerJob
 {
+    // Properties
+    // =========================================================================
 
-	// Properties
-	// =========================================================================
-
-	/**
-	 * The model instance associated with the current component instance.
-	 *
-	 * @var BaseModel
-	 */
-	public $model;
+    public mixed $model;
 
 
-	// Public Methods
-	// =========================================================================
+    // Public Methods
+    // =========================================================================
 
-	/**
-	 * @inheritDoc ISchedulerJob::run()
-	 *
-	 * @return bool
-	 */
-	public function run()
-	{
-		return true;
-	}
+    public function run(): bool
+    {
+        return true;
+    }
 
 }

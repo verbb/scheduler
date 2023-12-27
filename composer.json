@@ -1,8 +1,8 @@
 {
-    "name": "supercool/scheduler",
-    "description": "A plugin for Craft CMS that allows you to schedule jobs to be executed on a given date.",
+    "name": "verbb/scheduler",
+    "description": "Schedule jobs to be executed on a given date.",
     "type": "craft-plugin",
-    "version": "2.0.3",
+    "version": "3.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -11,31 +11,39 @@
         "scheduler"
     ],
     "support": {
-        "docs": "https://github.com/supercool/scheduler/blob/master/README.md",
-        "issues": "https://github.com/supercool/scheduler/issues"
+        "email": "support@verbb.io",
+        "issues": "https://github.com/verbb/scheduler/issues?state=open",
+        "source": "https://github.com/verbb/scheduler",
+        "docs": "https://github.com/verbb/scheduler",
+        "rss": "https://github.com/verbb/scheduler/commits/v2.atom"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Supercool",
-            "homepage": "http://supercooldesign.co.uk"
+            "name": "Verbb",
+            "homepage": "https://verbb.io"
+        },
+        {
+            "name": "Supercool Ltd",
+            "homepage": "http://www.supercooldesign.co.uk/"
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0-RC1"
+        "php": "^8.0.2",
+        "craftcms/cms": "^4.0.0",
+        "verbb/base": "^2.0.0"
     },
     "autoload": {
         "psr-4": {
-          "supercool\\scheduler\\": "src/"
+            "verbb\\scheduler\\": "src/"
         }
     },
     "extra": {
         "name": "Scheduler",
         "handle": "scheduler",
-        "schemaVersion": "1.0.0",
-        "hasCpSettings": false,
-        "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/supercool/scheduler/master/CHANGELOG.md",
-        "class": "supercool\\scheduler\\Scheduler"
+        "documentationUrl": "https://github.com/verbb/scheduler",
+        "changelogUrl": "https://raw.githubusercontent.com/verbb/scheduler/craft-4/CHANGELOG.md",
+        "class": "verbb\\scheduler\\Scheduler"
     }
 }
+

@@ -1,7 +1,7 @@
-{% import "_includes/forms" as forms %}
+{% import '_includes/forms' as forms %}
 
 {{ forms.selectField({
-    label: "Job Type"|t("scheduler"),
+    label: 'Job Type' | t('scheduler'),
     id: 'type',
     name: 'type',
     options: typeOptions,
@@ -9,7 +9,7 @@
 }) }}
 
 {{ forms.selectField({
-    label: "Minute Increment"|t("scheduler"),
+    label: 'Minute Increment' | t('scheduler'),
     id: 'minuteIncrement',
     name: 'minuteIncrement',
     options: incrementOptions,

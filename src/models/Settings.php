@@ -1,26 +1,25 @@
 <?php
-
-/**
- * Scheduler plugin for Craft CMS 3.x
- *
- * Scheduler
- *
- * @link      http://supercooldesign.co.uk
- * @copyright Copyright (c) 2018 Supercool
- */
-
-namespace supercool\scheduler\models;
+namespace verbb\scheduler\models;
 
 use craft\base\Model;
 
 class Settings extends Model
 {
-    public $enableReSaveElementOnElementSave = true;
+    // Properties
+    // =========================================================================
 
-    public function rules()
+    public bool $enableReSaveElementOnElementSave = true;
+
+
+    // Public Methods
+    // =========================================================================
+
+    public function defineRules(): array
     {
-        return [
-            [['enableReSaveElementOnElementSave'], 'required'],
-        ];
+        $rules = parent::defineRules();
+
+        $rules[] = [['enableReSaveElementOnElementSave'], 'required'];
+
+        return $rules;
     }
 }

@@ -1,26 +1,10 @@
 <?php
-
-namespace supercool\scheduler\jobs;
-
-/**
- * Scheduler plugin for Craft CMS 3.x
- *
- * Scheduler
- *
- * @link      http://supercooldesign.co.uk
- * @copyright Copyright (c) 2018 Supercool
- */
+namespace verbb\scheduler\jobs;
 
 interface ISchedulerJob
 {
+    // Public Methods
+    // =========================================================================
 
-	// Public Methods
-	// =========================================================================
-
-	/**
-	 * Run the specified Job.
-	 *
-	 * @return bool
-	 */
-	public function run();
+    public function run(): bool;
 }
