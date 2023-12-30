@@ -31,17 +31,6 @@ class Job extends Model
         return Craft::t('scheduler', $this->id);
     }
 
-    public function defineRules(): array
-    {
-        $rules = parent::defineRules();
-
-        $rules[] = [['id'], 'number', 'integerOnly' => true];
-        $rules[] = [['type', 'date'], 'required'];
-        $rules[] = [['type', 'context'], 'string', 'max' => 255];
-
-        return $rules;
-    }
-
     public function getJobType(): ?BaseSchedulerJob
     {
         if (!isset($this->_jobType)) {
@@ -65,6 +54,21 @@ class Job extends Model
         }
 
         return null;
+    }
+
+
+    // Protected Methods
+    // =========================================================================
+
+    protected function defineRules(): array
+    {
+        $rules = parent::defineRules();
+
+        $rules[] = [['id'], 'number', 'integerOnly' => true];
+        $rules[] = [['type', 'date'], 'required'];
+        $rules[] = [['type', 'context'], 'string', 'max' => 255];
+
+        return $rules;
     }
 
 }

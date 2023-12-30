@@ -2,7 +2,7 @@
     "name": "verbb/scheduler",
     "description": "Schedule jobs to be executed on a given date.",
     "type": "craft-plugin",
-    "version": "3.0.0",
+    "version": "4.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -29,9 +29,9 @@
         }
     ],
     "require": {
-        "php": "^8.0.2",
-        "craftcms/cms": "^4.0.0",
-        "verbb/base": "^2.0.0"
+        "php": "^8.2",
+        "craftcms/cms": "^5.0.0-alpha.1",
+        "verbb/base": "^3.0.0-beta.1"
     },
     "autoload": {
         "psr-4": {
@@ -42,7 +42,7 @@
         "name": "Scheduler",
         "handle": "scheduler",
         "documentationUrl": "https://github.com/verbb/scheduler",
-        "changelogUrl": "https://raw.githubusercontent.com/verbb/scheduler/craft-4/CHANGELOG.md",
+        "changelogUrl": "https://raw.githubusercontent.com/verbb/scheduler/craft-5/CHANGELOG.md",
         "class": "verbb\\scheduler\\Scheduler"
     }
 }

@@ -4,11 +4,8 @@ namespace verbb\scheduler\base;
 use verbb\scheduler\Scheduler;
 use verbb\scheduler\services\Jobs;
 
-use Craft;
-
-use yii\log\Logger;
-
-use verbb\base\BaseHelper;
+use verbb\base\LogTrait;
+use verbb\base\helpers\Plugin;
 
 trait PluginTrait
 {
@@ -18,25 +15,24 @@ trait PluginTrait
     public static Scheduler $plugin;
 
 
-    // Public Methods
+    // Traits
     // =========================================================================
 
-    public static function log($message, $attributes = []): void
+    use LogTrait;
+
+
+    // Static Methods
+    // =========================================================================
+
+    public static function config(): array
     {
-        if ($attributes) {
-            $message = Craft::t('scheduler', $message, $attributes);
-        }
+        Plugin::bootstrapPlugin('scheduler');
 
-        Craft::getLogger()->log($message, Logger::LEVEL_INFO, 'scheduler');
-    }
-
-    public static function error($message, $attributes = []): void
-    {
-        if ($attributes) {
-            $message = Craft::t('scheduler', $message, $attributes);
-        }
-
-        Craft::getLogger()->log($message, Logger::LEVEL_ERROR, 'scheduler');
+        return [
+            'components' => [
+                'jobs' => Jobs::class,
+            ],
+        ];
     }
 
 
@@ -46,24 +42,6 @@ trait PluginTrait
     public function getJobs(): Jobs
     {
         return $this->get('jobs');
-    }
-
-
-    // Private Methods
-    // =========================================================================
-
-    private function _setPluginComponents(): void
-    {
-        $this->setComponents([
-            'jobs' => Jobs::class,
-        ]);
-
-        BaseHelper::registerModule();
-    }
-
-    private function _setLogging(): void
-    {
-        BaseHelper::setFileLogging('scheduler');
     }
 
 }
