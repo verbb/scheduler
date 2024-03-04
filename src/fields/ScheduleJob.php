@@ -17,6 +17,11 @@ class ScheduleJob extends Date
         return Craft::t('scheduler', 'Schedule Job');
     }
 
+    public static function icon(): string
+    {
+        return '@verbb/scheduler/icon-mask.svg';
+    }
+
 
     // Properties
     // =========================================================================
