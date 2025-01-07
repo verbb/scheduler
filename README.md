@@ -1,5 +1,5 @@
-# Scheduler plugin for Craft CMS
-<img width="500" src="https://verbb.imgix.net/plugins/scheduler/scheduler-social-card.png?v=1">
+<p align="center"><img src="https://verbb.imgix.net/plugins/scheduler/scheduler-icon.svg" width="100" height="100" alt="Scheduler icon"></p>
+<h1 align="center">Scheduler for Craft CMS</h1>
 
 Scheduler is a Craft CMS plugin that allows you to schedule Jobs to be executed on a given date.
 
@@ -18,5 +18,5 @@ Scheduler is licensed under the MIT license, meaning it will always be free and 
 <h2></h2>
 
 <a href="https://verbb.io" target="_blank">
-    <img width="100" src="https://verbb.io/assets/img/verbb-pill.svg">
+    <img width="101" height="33" src="https://verbb.io/assets/img/verbb-pill.svg" alt="Verbb">
 </a>
