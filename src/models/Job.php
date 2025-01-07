@@ -18,7 +18,7 @@ class Job extends Model
     public ?string $type = null;
     public ?DateTime $date = null;
     public ?string $context = null;
-    public ?string $settings = null;
+    public null|string|array $settings = null;
 
     private mixed $_jobType = null;
 

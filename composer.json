@@ -2,7 +2,7 @@
     "name": "verbb/scheduler",
     "description": "Schedule jobs to be executed on a given date.",
     "type": "craft-plugin",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "keywords": [
         "craft",
         "cms",
