@@ -43,7 +43,7 @@ class CommandController extends Controller
         {
             if ($nextJobDate->getTimestamp() > DateTimeHelper::currentTimeStamp())
             {
-                $this->_end("The next job is at ".$nextJobDate->format('c'));
+                return $this->_end("The next job is at ".$nextJobDate->format('c'));
             }
             else
             {
@@ -54,7 +54,7 @@ class CommandController extends Controller
         // added or the cache expires
         else if ($nextJobDate == 'nodate')
         {
-            $this->_end();
+            return $this->_end();
         }
         // If we got this far then we need to check the next job
         else
@@ -66,14 +66,14 @@ class CommandController extends Controller
             // to true - it will be busted if a job is ever saved
             if (!$nextJobDate) {
                 Craft::$app->getCache()->set('scheduler_nextjobdate', 'nodate');
-                $this->_end();
+                return $this->_end();
             }
 
             // If the next job date is in the future, then set the cache and end
             if ($nextJobDate->getTimestamp() > DateTimeHelper::currentTimeStamp())
             {
                 Craft::$app->getCache()->set('scheduler_nextjobdate', $nextJobDate);
-                $this->_end("The next job is at ".$nextJobDate->format('c'));
+                return $this->_end("The next job is at ".$nextJobDate->format('c'));
             }
         }
 
@@ -104,11 +104,11 @@ class CommandController extends Controller
                 }
                 echo $sep;
             }
-            $this->_end('Schedule complete.');
+            return $this->_end('Schedule complete.');
         }
         else
         {
-            $this->_end();
+            return $this->_end();
         }
     }
 
