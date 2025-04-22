@@ -22,7 +22,7 @@ class CommandController extends Controller
     // Public Methods
     // =========================================================================
 
-    public function actionRun(): void
+    public function actionRun(): int
     {
         $sep = PHP_EOL . "------------------------------" . PHP_EOL;
         echo PHP_EOL . "Checking scheduled jobs ..." . PHP_EOL;
@@ -34,14 +34,14 @@ class CommandController extends Controller
         // If it is actually a date, then work out if we need to exit
         if ($nextJobDate instanceof DateTime) {
             if ($nextJobDate->getTimestamp() > DateTimeHelper::currentTimeStamp()) {
-                $this->_end("The next job is at " . $nextJobDate->format('c'));
+                return $this->_end("The next job is at " . $nextJobDate->format('c'));
             } else {
                 Craft::$app->getCache()->delete('scheduler_nextjobdate');
             }
         } else if ($nextJobDate == 'nodate') {
             // If there are no dates then bail - that will be busted when a new one is
             // added or the cache expires
-            $this->_end();
+            return $this->_end();
         } else {
             // If we got this far then we need to check the next job
             // Get the date of the next job
@@ -51,19 +51,19 @@ class CommandController extends Controller
             // to true - it will be busted if a job is ever saved
             if (!$nextJobDate) {
                 Craft::$app->getCache()->set('scheduler_nextjobdate', 'nodate');
-                $this->_end();
+                return $this->_end();
             }
 
             // If the next job date is in the future, then set the cache and end
             if ($nextJobDate->getTimestamp() > DateTimeHelper::currentTimeStamp()) {
                 Craft::$app->getCache()->set('scheduler_nextjobdate', $nextJobDate);
-                $this->_end("The next job is at " . $nextJobDate->format('c'));
+                return $this->_end("The next job is at " . $nextJobDate->format('c'));
             }
         }
 
         // If we got this far then there must be overdue jobs so get and loop them
         $jobs = Scheduler::$plugin->getJobs()->getOverdueJobs();
-        
+
         if ($jobs) {
             echo $sep;
 
@@ -87,9 +87,9 @@ class CommandController extends Controller
                 echo $sep;
             }
 
-            $this->_end('Schedule complete.');
+            return $this->_end('Schedule complete.');
         } else {
-            $this->_end();
+            return $this->_end();
         }
     }
 
