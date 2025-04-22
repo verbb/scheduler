@@ -2,7 +2,7 @@
 namespace verbb\scheduler\jobs;
 
 use Craft;
-use craft\elements\MatrixBlock;
+use craft\base\NestedElementInterface;
 
 use Throwable;
 
@@ -31,12 +31,9 @@ class SchedulerReSaveElementJob extends BaseSchedulerJob
             // Re-save the element using the Element Types save method
             // Now save it
             if (Craft::$app->getElements()->saveElement($element, false)) {
-                // Check if the element has an owner (MatrixBlock, SuperTableBlockElement)
-                // and if so, then save that too
-                if ($element instanceof MatrixBlock || $element instanceof \verbb\supertable\elements\SuperTableBlockElement) {
-                    $owner = $element->getOwner();
-
-                    if ($owner) {
+                // Check if the element has an owner
+                if ($element instanceof NestedElementInterface) {
+                    if ($owner = $element->getOwner()) {
                         Craft::$app->getElements()->saveElement($owner, false);
                     }
                 }
