@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.0.1 - 2025-07-18
+
+### Changed
+- Fix call to `end()`.
+
+### Fixed
+- Fix an error when running the re-save job for (outdated) Matrix elements.
+- Fix plugin install check.
+
 ## 4.0.0 - 2024-05-13
 
 ### Changed
