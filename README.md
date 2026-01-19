@@ -1,4 +1,4 @@
-<p align="center"><img src="https://verbb.imgix.net/plugins/scheduler/scheduler-icon.svg" width="100" height="100" alt="Scheduler icon"></p>
+<p align="center"><img src="https://assets.verbb.io/plugins/scheduler/scheduler-icon.svg" width="100" height="100" alt="Scheduler icon"></p>
 <h1 align="center">Scheduler for Craft CMS</h1>
 
 Scheduler is a Craft CMS plugin that allows you to schedule Jobs to be executed on a given date.
