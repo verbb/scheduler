@@ -1,6 +1,6 @@
 {
     "name": "verbb/scheduler",
-    "description": "Schedule jobs to be executed on a given date.",
+    "description": "A Craft CMS plugin for scheduling jobs to run through the queue.",
     "type": "craft-plugin",
     "version": "4.0.2",
     "keywords": [
