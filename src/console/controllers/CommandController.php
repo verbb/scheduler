@@ -38,7 +38,7 @@ class CommandController extends Controller
             } else {
                 Craft::$app->getCache()->delete('scheduler_nextjobdate');
             }
-        } else if ($nextJobDate == 'nodate') {
+        } elseif ($nextJobDate == 'nodate') {
             // If there are no dates then bail - that will be busted when a new one is
             // added or the cache expires
             return $this->_end();

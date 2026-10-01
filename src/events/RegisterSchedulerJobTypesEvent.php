@@ -7,6 +7,6 @@ class RegisterSchedulerJobTypesEvent extends Event
 {
     // Properties
     // =========================================================================
-    
+
     public array $types = [];
 }

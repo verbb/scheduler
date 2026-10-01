@@ -27,7 +27,7 @@ class Scheduler extends Plugin
 {
     // Properties
     // =========================================================================
-    
+
     public string $schemaVersion = '1.1.0';
 
 
@@ -97,7 +97,7 @@ class Scheduler extends Plugin
 
                 if ($postDate && $postDate > $currentTime) {
                     $date = $postDate;
-                } else if ($expiryDate && $expiryDate > $currentTime) {
+                } elseif ($expiryDate && $expiryDate > $currentTime) {
                     $date = $expiryDate;
                 }
 

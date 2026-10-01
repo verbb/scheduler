@@ -41,9 +41,9 @@ class ScheduleJob extends Date
         // If they are both selected or nothing is selected, the select showBoth.
         if ($this->showDate && $this->showTime) {
             $dateTimeValue = 'showBoth';
-        } else if ($this->showDate) {
+        } elseif ($this->showDate) {
             $dateTimeValue = 'showDate';
-        } else if ($this->showTime) {
+        } elseif ($this->showTime) {
             $dateTimeValue = 'showTime';
         }
 

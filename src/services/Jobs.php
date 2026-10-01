@@ -231,7 +231,7 @@ class Jobs extends Component
                 if ($transaction !== null) {
                     $transaction->rollback();
                 }
-                
+
                 throw $e;
             }
 
