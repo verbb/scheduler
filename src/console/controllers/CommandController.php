@@ -2,6 +2,8 @@
 namespace verbb\scheduler\console\controllers;
 
 use verbb\scheduler\Scheduler;
+use verbb\scheduler\helpers\OverdueJobs;
+use verbb\scheduler\services\Jobs;
 
 use Craft;
 use craft\helpers\DateTimeHelper;
@@ -10,9 +12,16 @@ use yii\console\Controller;
 use yii\console\ExitCode;
 
 use DateTime;
+use ReflectionMethod;
 
 class CommandController extends Controller
 {
+    // Constants
+    // =========================================================================
+
+    private const MAX_JOBS_PER_RUN = 100;
+
+
     // Properties
     // =========================================================================
 
@@ -62,7 +71,7 @@ class CommandController extends Controller
         }
 
         // If we got this far then there must be overdue jobs so get and loop them
-        $jobs = Scheduler::$plugin->getJobs()->getOverdueJobs();
+        $jobs = $this->_getOverdueJobs(Scheduler::$plugin->getJobs());
 
         if ($jobs) {
             echo $sep;
@@ -96,6 +105,19 @@ class CommandController extends Controller
 
     // Private Methods
     // =========================================================================
+
+    private function _getOverdueJobs(Jobs $jobsService): ?array
+    {
+        $method = new ReflectionMethod($jobsService, 'getOverdueJobs');
+
+        if ($method->getDeclaringClass()->getName() === Jobs::class) {
+            return OverdueJobs::get(self::MAX_JOBS_PER_RUN);
+        }
+
+        $jobs = $jobsService->getOverdueJobs();
+
+        return $jobs ? array_slice($jobs, 0, self::MAX_JOBS_PER_RUN) : null;
+    }
 
     private function _end($msg = false): int
     {

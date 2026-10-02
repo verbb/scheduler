@@ -2,13 +2,13 @@
 namespace verbb\scheduler\services;
 
 use verbb\scheduler\events\RegisterSchedulerJobTypesEvent;
+use verbb\scheduler\helpers\OverdueJobs;
 use verbb\scheduler\models\Job;
 use verbb\scheduler\records\Job as JobRecord;
 
 use Craft;
 use craft\db\Query;
 use craft\helpers\DateTimeHelper;
-use craft\helpers\Db;
 use craft\helpers\Json;
 
 use yii\base\Component;
@@ -119,24 +119,7 @@ class Jobs extends Component
 
     public function getOverdueJobs(): ?array
     {
-        $currentTime = DateTimeHelper::currentTimeStamp();
-        $currentTimeDb = Db::prepareDateForDb($currentTime);
-
-        $jobRecords = JobRecord::find()->where('date <= :now', [':now' => $currentTimeDb])
-            ->orderBy('date')
-            ->all();
-
-        if ($jobRecords) {
-            $jobModels = [];
-
-            foreach ($jobRecords as $jobRecord) {
-                $jobModels[] = $this->_createJobFromRecord($jobRecord);
-            }
-
-            return $jobModels;
-        }
-
-        return null;
+        return OverdueJobs::get();
     }
 
     public function getNextJobDate(): \DateTime|bool|null
