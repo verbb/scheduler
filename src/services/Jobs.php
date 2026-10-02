@@ -3,17 +3,19 @@ namespace verbb\scheduler\services;
 
 use verbb\scheduler\events\RegisterSchedulerJobTypesEvent;
 use verbb\scheduler\helpers\OverdueJobs;
+use verbb\scheduler\jobs\BaseSchedulerJob;
+use verbb\scheduler\jobs\SchedulerReSaveElementJob;
 use verbb\scheduler\models\Job;
 use verbb\scheduler\records\Job as JobRecord;
 
 use Craft;
 use craft\db\Query;
+use craft\helpers\Component as ComponentHelper;
 use craft\helpers\DateTimeHelper;
 use craft\helpers\Json;
 
 use yii\base\Component;
 use yii\base\Exception;
-use verbb\scheduler\jobs\SchedulerReSaveElementJob;
 
 class Jobs extends Component
 {
@@ -135,6 +137,8 @@ class Jobs extends Component
 
     public function addJob($type, $date, $context = 'global', $settings = []): void
     {
+        ComponentHelper::validateComponentClass($type, BaseSchedulerJob::class, true);
+
         $job = new Job();
         $job->type = $type;
         $job->date = $date;

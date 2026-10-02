@@ -34,7 +34,7 @@ class Job extends Model
     public function getJobType(): ?BaseSchedulerJob
     {
         if (!isset($this->_jobType)) {
-            $component = ComponentHelper::createComponent($this->type);
+            $component = ComponentHelper::createComponent($this->type, BaseSchedulerJob::class);
 
             if ($component) {
                 $component->model = $this;
