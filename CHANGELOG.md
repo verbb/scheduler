@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 4.0.4 - 2026-10-05
 
 ### Fixed
 - Fixed a low-severity component validation vulnerability.
