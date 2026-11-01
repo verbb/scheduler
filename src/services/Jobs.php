@@ -28,7 +28,7 @@ class Jobs extends Component
     // Properties
     // =========================================================================
 
-    private array $_allJobIds = [];
+    private ?array $_allJobIds = null;
     private array $_jobsById = [];
     private bool $_fetchedAllJobs = false;
 
