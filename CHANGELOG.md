@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 4.0.5 - 2026-11-01
 
 ### Fixed
 - Fixed `Jobs::getAllJobIds()` always returning an empty array.
